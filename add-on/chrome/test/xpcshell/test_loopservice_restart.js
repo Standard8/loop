@@ -109,6 +109,11 @@ add_task(function* test_initialize_with_fxa_token() {
 
 function run_test() {
   setupFakeLoopServer();
+
+  loopServer.registerPathHandler("/rooms", (request, response) => {
+    response.setStatusLine("{}", 200, "OK");
+  });
+
   // Note, this is just used to speed up the test.
   Services.prefs.setIntPref(LOOP_INITIAL_DELAY_PREF, 0);
   MozLoopServiceInternal.mocks.pushHandler = mockPushHandler;
